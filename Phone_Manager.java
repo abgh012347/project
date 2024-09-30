@@ -1,13 +1,9 @@
-package phone_app;
+package testpackage1;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
-import book_app.Book_List;
 
 public class Phone_Manager {
 	public String driver = "com.mysql.cj.jdbc.Driver";
@@ -22,14 +18,11 @@ public class Phone_Manager {
 	public Connection conn = null;
 	public Statement stmt = null;
 	public Phone_DBManager[] blockedList = null;
-	
+
 	private int history_no;
 //	private int user_id;
 //	private String phone_number;
 	private LocalDateTime call_date;
-
-	
-
 
 	public String getUser_id() {
 		return user_id;
@@ -47,10 +40,6 @@ public class Phone_Manager {
 		this.user_name = user_name;
 	}
 
-	
-
-	
-
 	public String getBlock_yn() {
 		return block_yn;
 	}
@@ -59,8 +48,6 @@ public class Phone_Manager {
 		this.block_yn = block_yn;
 	}
 
-
-	
 //	public Phone_Call_History(String phone_number, LocalDateTime call_date) {
 //		this.phone_number=phone_number;
 //		this.call_date=call_date;
@@ -96,54 +83,55 @@ public class Phone_Manager {
 
 	public Phone_Manager() {
 		// TODO Auto-generated constructor stub
-		
-	}
-	
-	public void Main_Menu_Open() {
-		 while(true) {
-	        	System.out.println("=======================");
-	        	System.out.println("     프로젝트 메인화면");
-	            System.out.println("=======================");
-	            System.out.println("1. 전화, 2. 도서, 3. 종료" );
-	            System.out.println("★ 메뉴 번호를 선택해 주세요");
 
-	            Scanner in = new Scanner(System.in);
-	            int number = in.nextInt();
-	            if(number < 1 || number >= 4) {
-	                System.out.println("메뉴번호가 틀렸습니다.");
-	                continue;
-	            } else {
-	                switch(number) {
-	                    case 1: 
-	                        System.out.println("전화");
-	                        Phone_Menu_Open();
-	                        break;
-	                    case 2: 
-	                        System.out.println("도서");
-	                        Book_List blist = new Book_List();
-	                        blist.bookMenu();
-	                        break;
-	                    case 3:
-	                        System.out.println("종료합니다.");
-	                        return; 
-	                }
-	            }
-	        }
 	}
-	public void Phone_Menu() {
-			System.out.println("======================================");
-			System.out.println();
-			System.out.println("전화");
-		    System.out.println();
-			System.out.println("======================================");
-			System.out.println("1.전화걸기");
-			System.out.println("2.연락처");
-			System.out.println("3.통화기록");
-			System.out.println("4.차단목록");
-			System.out.println("5.전화 앱 종료");
+
+	public void Main_Menu_Open() {
+		while (true) {
+			System.out.println("=======================");
+			System.out.println("     프로젝트 메인화면");
+			System.out.println("=======================");
+			System.out.println("1. 전화, 2. 도서, 3. 종료");
+			System.out.println("★ 메뉴 번호를 선택해 주세요");
+
+			Scanner in = new Scanner(System.in);
+			int number = in.nextInt();
+			if (number < 1 || number >= 4) {
+				System.out.println("메뉴번호가 틀렸습니다.");
+				continue;
+			} else {
+				switch (number) {
+				case 1:
+					System.out.println("전화");
+					Phone_Menu_Open();
+					break;
+				case 2:
+					System.out.println("도서");
+					Book_List blist = new Book_List();
+					blist.bookMenu();
+					break;
+				case 3:
+					System.out.println("종료합니다.");
+					return;
+				}
+			}
 		}
-	
-		public void Phone_Menu_Open() {
+	}
+
+	public void Phone_Menu() {
+		System.out.println("======================================");
+		System.out.println();
+		System.out.println("전화");
+		System.out.println();
+		System.out.println("======================================");
+		System.out.println("1.전화걸기");
+		System.out.println("2.연락처");
+		System.out.println("3.통화기록");
+		System.out.println("4.차단목록");
+		System.out.println("5.전화 앱 종료");
+	}
+
+	public void Phone_Menu_Open() {
 		Scanner input = new Scanner(System.in);
 
 		boolean end_flag = false;
@@ -171,25 +159,23 @@ public class Phone_Manager {
 				blockList();
 			case 5:
 				end_flag = true;
-				break;       // 전화 앱 종료
+				break; // 전화 앱 종료
 			default:
 			}
 			if (end_flag) {
 				break;
 			}
-			
-    
-     
-    
-     }
+
+		}
 	}
+
 	public void call() {
 		Phone_DBManager manager = new Phone_DBManager();
-		Phone_Call phone_call= new Phone_Call();
+		Phone_Call phone_call = new Phone_Call();
 		manager.initDBConnect();
-		
-		Scanner input=new Scanner(System.in);
-		
+
+		Scanner input = new Scanner(System.in);
+
 		System.out.println("1\t2\t3");
 		System.out.println();
 		System.out.println("4\t5\t6");
@@ -197,14 +183,14 @@ public class Phone_Manager {
 		System.out.println("7\t8\t9");
 		System.out.println();
 		System.out.println("*\t0\t#");
-		
+
 		System.out.print("번호: ");
-		String number=input.nextLine();
-		
+		String number = input.nextLine();
+
 		manager.call(number);
-		
+
 		// manager.showCallHistory();
-		
+
 //		Phone_DBManager manager = new Phone_DBManager();
 //		Phone_Call phone_call= new Phone_Call();
 //		manager.initDBConnect();
@@ -226,7 +212,7 @@ public class Phone_Manager {
 //		
 //		//showCallHistory();
 	}
-	
+
 	public void contacts() {
 		System.out.println("주소록");
 		Phone_DBManager manager = new Phone_DBManager();
@@ -235,138 +221,123 @@ public class Phone_Manager {
 		System.out.println("1.연락처 추가 2.연락처 삭제 3.뒤로 가기");
 		Scanner input = new Scanner(System.in);
 		int select_no = input.nextInt();
-		switch(select_no) {
-		case 1: 
+		switch (select_no) {
+		case 1:
 			manager.insert_user_list();
 		case 2:
 			manager.delete_user_list();
-		default :
+		default:
 			break;
 		}
-		
-		
-		
+
 	}
-	
+
 	public void callList() {
 		Phone_DBManager manager = new Phone_DBManager();
 		manager.initDBConnect();
 		manager.showCallHistory();
-		
 
 	}
-	
+
 	public void blockList() {
-			Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 
-			System.out.println("############################");
-			System.out.println("차단목록리스트");
-			System.out.println();
+		System.out.println("############################");
+		System.out.println("차단목록리스트");
+		System.out.println();
 
-			Phone_DBManager manager = new Phone_DBManager();
-			manager.initDBConnect();
-			manager.allFetch();
-			Phone_DBManager[] blockedList = manager.getBlockedList();
-			for (int i = 0; i < blockedList.length; i++) {
-				System.out.println(blockedList[i].getPhone_number());
-			} // 차단리스트 불러오기
+		Phone_DBManager manager = new Phone_DBManager();
+		manager.initDBConnect();
+		manager.allFetch();
+		Phone_DBManager[] blockedList = manager.getBlockedList();
+		for (int i = 0; i < blockedList.length; i++) {
+			System.out.println(blockedList[i].getPhone_number());
+		} // 차단리스트 불러오기
 
-			System.out.println();
-			System.out.println("############################");
-			System.out.println();
-			System.out.println("1.추가하기");
-			System.out.println("2.해제하기");
-			System.out.println("3.뒤로가기");
+		System.out.println();
+		System.out.println("############################");
+		System.out.println();
+		System.out.println("1.추가하기");
+		System.out.println("2.해제하기");
+		System.out.println("3.뒤로가기");
 
-			boolean end_flag = false;
+		boolean end_flag = false;
 
-			while (true) {
-				System.out.print("메뉴번호를 선택해 주세요 : ");
-				int number = input.nextInt();
-
-				if (number < 1 || number > 3) {
-					System.out.println("메뉴번호가 틀렸습니다.다시 선택해 주세요.");
-					continue;
-				}
-				switch (number) {
-				case 1:
-					addBlock();
-					break;
-				case 2:
-					unblock(blockedList);
-					break;
-				case 3:
-					end_flag = true;
-					break;
-				}
-				if (end_flag) {
-					break;
-				}
+		while (true) {
+			System.out.print("메뉴번호를 선택해 주세요 : ");
+			int number = input.nextInt();
+			if (number < 1 || number > 3) {
+				System.out.println("메뉴번호가 틀렸습니다.다시 선택해 주세요.");
+				continue;
+			}
+			switch (number) {
+			case 1:
+				addBlock();
+				break;
+			case 2:
+				unblock(blockedList);
+				break;
+			case 3:
+				end_flag = true;
+				break;
+			}
+			if (end_flag) {
+				break;
 			}
 		}
-		
+	}
 
-		public static void addBlock() {
-			Phone_DBManager manager = new Phone_DBManager();
-			System.out.println("차단하실 전화번호를 입력해주세요.");
+	public static void addBlock() {
+		Phone_DBManager manager = new Phone_DBManager();
+		System.out.println("차단하실 전화번호를 입력해주세요.");
+		Scanner input = new Scanner(System.in);
+		String phnumber = input.nextLine();
+
+		if (manager.selectNumber(phnumber)) {
+			System.out.println("이미 차단된 전화번호입니다.");
+		} else {
+			manager.inputNumber(phnumber);
+			System.out.println("해당 번호가 차단되었습니다.");
+		}
+	}
+	public static void unblock(Phone_DBManager[] blockedList) {
+		Phone_DBManager manager = new Phone_DBManager();
+		// Phone_DBManager[] blockedList = manager.getBlockedList();
+
+		System.out.println("어느 번호를 차단해제하시겠습니까? 차단해제하실 번호를 입력하세요.");
+
+		while (true) {
 			Scanner input = new Scanner(System.in);
 			String phnumber = input.nextLine();
+			boolean end_flag = false;
 
 			if (manager.selectNumber(phnumber)) {
-				System.out.println("이미 차단된 전화번호입니다.");
-			} else {
-				manager.inputNumber(phnumber);
-				System.out.println("해당 번호가 차단되었습니다.");
-			}
-
-		}
-
-		public static void unblock(Phone_DBManager[] blockedList) {
-			Phone_DBManager manager = new Phone_DBManager();
-			//Phone_DBManager[] blockedList = manager.getBlockedList();
-
-			System.out.println("어느 번호를 차단해제하시겠습니까? 차단해제하실 번호를 입력하세요.");
-
-			while (true) {
-				Scanner input = new Scanner(System.in);
-				String phnumber = input.nextLine();
-				boolean end_flag = false;
-
-				if (manager.selectNumber(phnumber)) {
-					for (int i = 0; i < blockedList.length; i++) {
-						if (blockedList[i].getPhonenumber() == phnumber) {
-							for (int j = i; j < blockedList.length - 1; j++) {
-								blockedList[j] = blockedList[j + 1];
-							}
-							blockedList[blockedList.length - 1] = null;
-							break;
+				for (int i = 0; i < blockedList.length; i++) {
+					if (blockedList[i].getPhonenumber() == phnumber) {
+						for (int j = i; j < blockedList.length - 1; j++) {
+							blockedList[j] = blockedList[j + 1];
 						}
+						blockedList[blockedList.length - 1] = null;
+						break;
 					}
-					end_flag = true;
-					manager.outputNumber(phnumber);
-					System.out.println("해당 번호가 차단해제 되었습니다.");
-				} else {
-					System.out.println("없는 번호입니다. 다시입력해주세요.");
-					continue;
 				}
-
-				if (end_flag) {
-					break;
-				}
+				end_flag = true;
+				manager.outputNumber(phnumber);
+				System.out.println("해당 번호가 차단해제 되었습니다.");
+			} else {
+				System.out.println("없는 번호입니다. 다시입력해주세요.");
+				continue;
 			}
 
+			if (end_flag) {
+				break;
+			}
 		}
-	
+	}
 
-	
-	
 	public void callAppEnd() {
 		System.out.println("통화앱을 종료합니다");
 	}
-
-	
-
-	
 
 	public static String getPhonenumber() {
 		return p_phone_number;
@@ -375,9 +346,4 @@ public class Phone_Manager {
 	public void setPhonenumber(String phonenumber) {
 		this.p_phone_number = phonenumber;
 	}
-
-
 }
-
-
-

@@ -1,4 +1,4 @@
-package book_app;
+package testpackage1;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,11 +7,13 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class Book_List {
 
+public class Book_List {
+	
+	
 	static Book_Manager manager = new Book_Manager();
 	static Book oneBook = null;
-	static String nowUser = "";
+	static User nowUser = null;
 
 //	public static void main(String[] args) {
 //		manager.initDBConnect();
@@ -36,9 +38,8 @@ public class Book_List {
 
 
             if (manager.authenticateUser(idInput, pwInput)) {
-            	nowUser = idInput;
+            	nowUser = new User(idInput);
                 System.out.println("로그인 성공!!!");
-                
                 break;  // 로그인 성공 시 반복문 종료
             } else {
                 System.out.println("아이디 또는 패스워드가 잘못되었습니다.");
@@ -86,7 +87,7 @@ public class Book_List {
 					return;
 				case 3:
 					System.out.println("로그아웃.");
-					nowUser = "";
+//					nowUser = "";
 					flag=true;
 					return;
 				}
@@ -105,12 +106,10 @@ public class Book_List {
 		System.out.println("===================================================================");
 		System.out.println("찾으시려는 유저 명과, 반납여부를 체크해주세요");
 
-		System.out.print("유저: ");
-		String userid = sc.nextLine();
 		System.out.print("반납여부: ");
 		String yn = sc.nextLine();
 		if (yn.toUpperCase().equals("N") || yn.toUpperCase().equals("Y")) {
-			manager.getAllBook(userid, yn);
+			manager.getAllBook(Book_List.nowUser.getUserid(), yn);
 		} else {
 			System.out.println("잘못입력하였습니다");
 		}
@@ -126,13 +125,10 @@ public class Book_List {
 				System.out.println("출판사: " + rs.getString("publisher"));
 				System.out.println("대여가능 권 수: " + rs.getInt("bookcount"));
 				System.out.println("도서종류: " + rs.getString("category"));
-
 				System.out.println("=====================================");
 			}
 			rs.close();
-			
 			return;
-
 		} catch (SQLException e) {
 			System.out.println("showAllBook() 오류 발생");
 			e.printStackTrace();
@@ -279,7 +275,7 @@ public class Book_List {
 
 		try {
 			PreparedStatement pstmt = manager.conn.prepareStatement(sql);
-			pstmt.setString(1, nowUser); // (change)
+			pstmt.setString(1, nowUser.getUserid()); // (change)
 			pstmt.setInt(2, oneBook.getBookno());
 			pstmt.setTimestamp(3, Timestamp.valueOf(date));
 			pstmt.executeUpdate();
