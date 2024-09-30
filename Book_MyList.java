@@ -1,4 +1,4 @@
-package book_app;
+package testpackage1;
 
 import java.util.Scanner;
 
@@ -20,12 +20,10 @@ public class Book_MyList {
 		System.out.println("===================================================================");
 		System.out.println("찾으시려는 유저 명과, 반납여부를 체크해주세요");
 
-//		System.out.print("유저: ");
-//		String userid = sc.nextLine();
 		System.out.print("반납여부: ");
 		String yn = sc.nextLine();
 		if (yn.toUpperCase().equals("N") || yn.toUpperCase().equals("Y")) {
-//			manager.getAllBook(userid, yn);
+			manager.getAllBook(Book_List.nowUser.getUserid(), yn);
 		} else {
 			System.out.println("잘못입력하였습니다");
 		}

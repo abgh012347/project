@@ -1,10 +1,11 @@
-package book_app;
+package testpackage1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+
 import java.sql.SQLException;
 
 import java.sql.PreparedStatement; // 동적sql
@@ -35,28 +36,30 @@ public class Book_Manager {
 			e.printStackTrace();
 		}
 	}
+
 	public static boolean authenticateUser(String id, String password) {
-        String sql = "SELECT * FROM user WHERE userid = ? AND userpw = ?"; // 테이블 이름과 컬럼 이름 변경 필요
-        try (PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setString(1, id);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next(); // 결과가 존재하면 true 반환
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+		String sql = "SELECT * FROM user WHERE userid = ? AND userpw = ?"; // 테이블 이름과 컬럼 이름 변경 필요
+		try (PreparedStatement statement = conn.prepareStatement(sql)) {
+			statement.setString(1, id);
+			statement.setString(2, password);
+			ResultSet resultSet = statement.executeQuery();
+			return resultSet.next(); // 결과가 존재하면 true 반환
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	public void releaseDB() {
 		try {
 			this.conn.close();
 			this.stmt.close();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public void getAllBook(String user_id, String yn) {
 
 		// 문자열 변수에 쿼리를 저장
@@ -83,8 +86,7 @@ public class Book_Manager {
 				System.out.println("책 제목: " + bookname + " 대여기한: " + rental_date);
 				System.out.println("출판사: " + publisher + " 반납 여부: " + return_yn);
 				System.out.println("===================================================================");
-				
-			
+
 			}
 			// 다 사용하면 닫아준다.
 			rs.close();
@@ -92,6 +94,5 @@ public class Book_Manager {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

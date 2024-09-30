@@ -1,4 +1,4 @@
-package phone_app;
+package testpackage1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -95,7 +95,6 @@ public class Phone_DBManager {
 				 
 				 if(rs.next()) {
 					 return true;
-
 				 }
 				 rs.close();
 				 
@@ -166,9 +165,10 @@ public class Phone_DBManager {
 				ResultSet rs = pstmt.executeQuery();
 
 				while (rs.next()) {
-					String number = rs.getString("p_phone_number");
 					
+					String number = rs.getString("p_phone_number");
 					userList[callCount++]=new Phone_DBManager(number);
+					
 				}
 				rs.close();
 
